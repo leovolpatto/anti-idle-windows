@@ -20,6 +20,7 @@
 		<PublishTrimmed>true</PublishTrimmed>
 		<EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">

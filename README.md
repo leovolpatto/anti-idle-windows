@@ -71,3 +71,32 @@ The application runs the selected method at the specified interval (default: 30 
 ## License
 
 This project is provided as-is for educational and utility purposes.
+
+
+# Windows SmartScreen Warning
+
+When running the executable, Windows may show a SmartScreen warning: "Windows protected your PC". This is normal for unsigned executables.
+
+### Why This Happens
+- The executable is not digitally signed with a code signing certificate
+- Windows doesn't recognize the publisher
+- Low download reputation (common for new releases)
+
+### How to Run
+1. Click "More info" on the SmartScreen dialog
+2. Click "Run anyway"
+3. The program will start normally
+
+### Alternative: Build From Source
+To avoid the warning entirely, compile the program yourself:
+
+```bash
+git clone https://github.com/yourusername/anti-idle-windows
+cd anti-idle-windows
+dotnet publish -c Release
+```
+
+The executable will be at `bin\Release\net8.0\win-x64\publish\anti-idle-windows.exe`
+
+### Security Note
+This project is open source - you can review the code before compiling. The SmartScreen warning doesn't indicate malware, just an unsigned executable.
