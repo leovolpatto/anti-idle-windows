@@ -15,7 +15,7 @@ namespace AntiIdleWindows
 
 			// Parse command line arguments
 			var method = KeepAliveMethod.Hybrid;
-			var interval = 2;
+			var interval = 30;
 
 			if (args.Length > 0)
 			{

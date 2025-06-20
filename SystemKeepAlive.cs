@@ -44,7 +44,7 @@ namespace AntiIdleWindows
 		private static volatile bool _isPaused = false;
 		private static volatile bool _isRunning = false;
 		private static KeepAliveMethod _currentMethod = KeepAliveMethod.ExecutionState;
-		private static int _currentInterval = 5;
+		private static int _currentInterval = 30;
 		private static readonly object _lockObject = new object();
 		private const int MOUSE_MOV_DISTANCE = 500;
 		private const int MOUSE_MOV_SPEED = 30;
@@ -207,9 +207,9 @@ namespace AntiIdleWindows
 
 							case KeepAliveMethod.Hybrid:
 								JiggleMouse();
-								PreventSleepViaExecutionState();
-								//if (_currentInterval >= 5) // Only jiggle mouse occasionally for hybrid mode
+								//if (_currentInterval >= 30) // Only jiggle mouse occasionally for hybrid mode
 								//	JiggleMouse();
+								PreventSleepViaExecutionState();
 								break;
 						}
 
