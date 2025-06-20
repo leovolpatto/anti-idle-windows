@@ -187,9 +187,10 @@ namespace AntiIdleWindows
 								break;
 
 							case KeepAliveMethod.Hybrid:
+								JiggleMouse();
 								PreventSleepViaExecutionState();
-								if (_currentInterval >= 60) // Only jiggle mouse occasionally for hybrid mode
-									JiggleMouse();
+								//if (_currentInterval >= 60) // Only jiggle mouse occasionally for hybrid mode
+									//JiggleMouse();
 								break;
 						}
 
