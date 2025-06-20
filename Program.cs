@@ -3,9 +3,6 @@ using System.Threading.Tasks;
 
 namespace AntiIdleWindows
 {
-	/// <summary>
-	/// Main program entry point
-	/// </summary>
 	class Program
 	{
 		static async Task Main(string[] args)
@@ -13,7 +10,6 @@ namespace AntiIdleWindows
 			Console.WriteLine("=== Anti-Idle Windows Utility ===");
 			Console.WriteLine();
 
-			// Parse command line arguments
 			var method = KeepAliveMethod.Hybrid;
 			var interval = 2;
 
@@ -33,7 +29,6 @@ namespace AntiIdleWindows
 				}
 			}
 
-			// Handle Ctrl+C gracefully
 			Console.CancelKeyPress += (_, e) =>
 			{
 				e.Cancel = true;
@@ -43,14 +38,11 @@ namespace AntiIdleWindows
 				Environment.Exit(0);
 			};
 
-			// Start services
 			SystemKeepAlive.Start(method, interval);
 			ConsoleInterface.Start();
 
-			// Wait for exit command
 			await ConsoleInterface.WaitForExit();
 
-			// Cleanup
 			SystemKeepAlive.Stop();
 			Console.WriteLine("Program terminated.");
 		}

@@ -5,9 +5,6 @@ using System.Threading.Tasks;
 
 namespace AntiIdleWindows
 {
-	/// <summary>
-	/// Provides methods to prevent Windows from entering idle/sleep mode
-	/// </summary>
 	public static class SystemKeepAlive
 	{
 		#region Windows API Imports
@@ -74,11 +71,6 @@ namespace AntiIdleWindows
 		/// </summary>
 		public static int CurrentInterval => _currentInterval;
 
-		/// <summary>
-		/// Starts the keep-alive service to prevent system from going idle
-		/// </summary>
-		/// <param name="method">Method to use for keeping system awake</param>
-		/// <param name="intervalSeconds">Interval between keep-alive actions in seconds</param>
 		public static void Start(KeepAliveMethod method = KeepAliveMethod.ExecutionState, int intervalSeconds = 30)
 		{
 			lock (_lockObject)
@@ -101,9 +93,6 @@ namespace AntiIdleWindows
 			}
 		}
 
-		/// <summary>
-		/// Pauses the keep-alive service (allows system to go idle)
-		/// </summary>
 		public static void Pause()
 		{
 			lock (_lockObject)
@@ -127,9 +116,6 @@ namespace AntiIdleWindows
 			}
 		}
 
-		/// <summary>
-		/// Resumes the keep-alive service
-		/// </summary>
 		public static void Resume()
 		{
 			lock (_lockObject)
@@ -151,20 +137,16 @@ namespace AntiIdleWindows
 			}
 		}
 
-		/// <summary>
-		/// Toggles pause/resume state
-		/// </summary>
 		public static void Toggle()
 		{
-			if (_isPaused)
+			if (_isPaused){
 				Resume();
-			else
-				Pause();
+				return;
+			}
+			
+			Pause();
 		}
 
-		/// <summary>
-		/// Stops the keep-alive service
-		/// </summary>
 		public static void Stop()
 		{
 			lock (_lockObject)
@@ -177,7 +159,6 @@ namespace AntiIdleWindows
 
 				_cancellationTokenSource?.Cancel();
 
-				// Reset execution state
 				SetThreadExecutionState(ExecutionState.ES_CONTINUOUS);
 
 				_isPaused = false;
@@ -224,7 +205,6 @@ namespace AntiIdleWindows
 			}
 			catch (OperationCanceledException)
 			{
-				// Expected when cancellation is requested
 				StatusChanged?.Invoke("Keep-alive loop terminated.");
 			}
 			catch (Exception ex)

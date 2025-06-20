@@ -1,6 +1,6 @@
 # Anti-Idle Windows
 
-A amateur, lightweight utility to prevent Windows from going idle or entering sleep mode.
+An amateur, lightweight utility to prevent Windows from going idle or entering sleep mode.
 
 ## Features
 

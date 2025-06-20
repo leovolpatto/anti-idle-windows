@@ -4,9 +4,6 @@ using System.Threading.Tasks;
 
 namespace AntiIdleWindows
 {
-	/// <summary>
-	/// Handles console input and user interaction
-	/// </summary>
 	public static class ConsoleInterface
 	{
 		private static CancellationTokenSource? _inputCancellationSource;
@@ -14,23 +11,16 @@ namespace AntiIdleWindows
 		private static volatile bool _shouldExit = false;
 		private static readonly object _consoleLock = new object();
 
-		/// <summary>
-		/// Starts the console interface on a separate thread
-		/// </summary>
 		public static void Start()
 		{
 			_inputCancellationSource = new CancellationTokenSource();
 			_inputTask = Task.Run(() => HandleInput(_inputCancellationSource.Token));
 
-			// Subscribe to status changes
 			SystemKeepAlive.StatusChanged += OnStatusChanged;
 
 			ShowHelp();
 		}
 
-		/// <summary>
-		/// Stops the console interface
-		/// </summary>
 		public static void Stop()
 		{
 			_shouldExit = true;
@@ -38,9 +28,6 @@ namespace AntiIdleWindows
 			SystemKeepAlive.StatusChanged -= OnStatusChanged;
 		}
 
-		/// <summary>
-		/// Waits for the interface to complete
-		/// </summary>
 		public static async Task WaitForExit()
 		{
 			if (_inputTask != null)
@@ -51,10 +38,8 @@ namespace AntiIdleWindows
 
 		private static void OnStatusChanged(string message)
 		{
-			// Thread-safe console output
 			lock (_consoleLock)
 			{
-				// Clear current line and write message
 				Console.Write("\r" + new string(' ', Math.Max(Console.WindowWidth - 1, 80)) + "\r");
 				Console.WriteLine(message);
 
@@ -78,7 +63,6 @@ namespace AntiIdleWindows
 				{
 					try
 					{
-						// Read input in a separate task to make it cancellable
 						string? input = null;
 						var readTask = Task.Run(() =>
 						{
@@ -92,7 +76,6 @@ namespace AntiIdleWindows
 							}
 						});
 
-						// Wait for either input or cancellation
 						var completedTask = await Task.WhenAny(readTask, Task.Delay(-1, cancellationToken));
 
 						if (completedTask == readTask && !cancellationToken.IsCancellationRequested)
@@ -103,7 +86,6 @@ namespace AntiIdleWindows
 							{
 								var success = ProcessCommand(input.Trim().ToLower());
 
-								// Debug output
 								if (!success && input != "q" && input != "quit" && input != "exit")
 								{
 									lock (_consoleLock)

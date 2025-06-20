@@ -1,8 +1,5 @@
 namespace AntiIdleWindows
 {
-	/// <summary>
-	/// Methods available for keeping the system awake
-	/// </summary>
 	public enum KeepAliveMethod
 	{
 		/// <summary>
